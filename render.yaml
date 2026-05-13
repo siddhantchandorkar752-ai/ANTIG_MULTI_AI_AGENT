@@ -1,0 +1,58 @@
+# Render Blueprint Configuration
+# https://render.com/docs/blueprint-spec
+services:
+  # ── 1. FastAPI Backend ──────────────────────────────────────────────────
+  - type: web
+    name: omega-api
+    env: docker
+    dockerfilePath: ./Dockerfile.api
+    plan: starter
+    region: ohio
+    healthCheckPath: /health/live
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: omega-postgres
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: omega-redis
+          property: connectionString
+      - key: CHROMA_HOST
+        value: omega-chroma
+      - key: CHROMA_PORT
+        value: "8000"
+      - key: ENVIRONMENT
+        value: production
+      # Note: Add your OPENAI_API_KEY and other LLM keys in the Render Dashboard securely!
+
+  # ── 2. ChromaDB Vector Store ────────────────────────────────────────────
+  - type: web
+    name: omega-chroma
+    env: docker
+    image: chromadb/chroma:latest
+    plan: starter
+    region: ohio
+    envVars:
+      - key: ALLOW_RESET
+        value: "TRUE"
+      - key: ANONYMIZED_TELEMETRY
+        value: "FALSE"
+    disk:
+      name: chroma-data
+      mountPath: /chroma/chroma
+      sizeGB: 10
+
+databases:
+  # ── 3. PostgreSQL Database ──────────────────────────────────────────────
+  - name: omega-postgres
+    plan: free
+    region: ohio
+
+  # ── 4. Redis Cache ──────────────────────────────────────────────────────
+  - type: redis
+    name: omega-redis
+    plan: free
+    region: ohio
+    maxmemoryPolicy: allkeys-lru
