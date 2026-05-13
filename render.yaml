@@ -25,13 +25,13 @@ services:
         value: "8000"
       - key: ENVIRONMENT
         value: production
-      # Note: Add your OPENAI_API_KEY and other LLM keys in the Render Dashboard securely!
 
   # ── 2. ChromaDB Vector Store ────────────────────────────────────────────
   - type: web
     name: omega-chroma
-    env: docker
-    image: chromadb/chroma:latest
+    env: image
+    image:
+      url: docker.io/chromadb/chroma:latest
     plan: starter
     region: ohio
     envVars:
@@ -44,15 +44,15 @@ services:
       mountPath: /chroma/chroma
       sizeGB: 10
 
-databases:
-  # ── 3. PostgreSQL Database ──────────────────────────────────────────────
-  - name: omega-postgres
-    plan: free
-    region: ohio
-
-  # ── 4. Redis Cache ──────────────────────────────────────────────────────
+  # ── 3. Redis Cache ──────────────────────────────────────────────────────
   - type: redis
     name: omega-redis
     plan: free
     region: ohio
     maxmemoryPolicy: allkeys-lru
+
+databases:
+  # ── 4. PostgreSQL Database ──────────────────────────────────────────────
+  - name: omega-postgres
+    plan: free
+    region: ohio
