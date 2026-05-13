@@ -50,6 +50,7 @@ services:
     plan: free
     region: ohio
     maxmemoryPolicy: allkeys-lru
+    ipAllowList: []
 
 databases:
   # ── 4. PostgreSQL Database ──────────────────────────────────────────────
