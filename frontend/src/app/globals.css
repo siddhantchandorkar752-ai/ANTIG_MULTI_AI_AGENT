@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --omega-bg: #030712;
+  --omega-surface: #0d1117;
+  --omega-card: #161b22;
+  --omega-border: #21262d;
+  --omega-accent: #58a6ff;
+  --omega-accent2: #bc8cff;
+  --omega-accent3: #3fb950;
+  --omega-accent4: #f78166;
+  --omega-accent5: #d29922;
+  --omega-text: #e6edf3;
+  --omega-muted: #8b949e;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--omega-bg);
+  color: var(--omega-text);
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--omega-surface);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--omega-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--omega-muted);
+}
+
+/* ── Glass morphism card ─────────────────────────────────────────────────── */
+.glass-card {
+  background: rgba(22, 27, 34, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(33, 38, 45, 0.8);
+  border-radius: 12px;
+}
+
+/* ── Neon glow effects ───────────────────────────────────────────────────── */
+.glow-blue {
+  box-shadow: 0 0 20px rgba(88, 166, 255, 0.3), 0 0 40px rgba(88, 166, 255, 0.1);
+}
+.glow-purple {
+  box-shadow: 0 0 20px rgba(188, 140, 255, 0.3), 0 0 40px rgba(188, 140, 255, 0.1);
+}
+.glow-green {
+  box-shadow: 0 0 20px rgba(63, 185, 80, 0.3), 0 0 40px rgba(63, 185, 80, 0.1);
+}
+
+/* ── Agent state indicators ──────────────────────────────────────────────── */
+.state-idle { color: var(--omega-muted); }
+.state-planning { color: var(--omega-accent5); }
+.state-searching { color: var(--omega-accent); }
+.state-reading { color: var(--omega-accent2); }
+.state-writing { color: var(--omega-accent3); }
+.state-critiquing { color: var(--omega-accent4); }
+.state-completed { color: var(--omega-accent3); }
+.state-failed { color: var(--omega-accent4); }
+
+/* ── Gradient text ───────────────────────────────────────────────────────── */
+.gradient-text {
+  background: linear-gradient(135deg, #58a6ff 0%, #bc8cff 50%, #3fb950 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Scanning line animation ─────────────────────────────────────────────── */
+.scanning-line {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(88, 166, 255, 0.15) 50%,
+    transparent 100%
+  );
+  background-size: 100% 40px;
+  animation: scanning 3s linear infinite;
+}
+
+/* ── Progress bars ───────────────────────────────────────────────────────── */
+.progress-bar {
+  height: 3px;
+  border-radius: 2px;
+  background: var(--omega-border);
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--omega-accent), var(--omega-accent2));
+  transition: width 0.5s ease;
+}
+
+/* ── Code blocks ─────────────────────────────────────────────────────────── */
+pre, code {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.875rem;
+}
+
+/* ── Markdown content ────────────────────────────────────────────────────── */
+.markdown-content h1, .markdown-content h2, .markdown-content h3 {
+  color: var(--omega-text);
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+.markdown-content h1 { font-size: 1.875rem; font-weight: 700; }
+.markdown-content h2 { font-size: 1.5rem; font-weight: 600; border-bottom: 1px solid var(--omega-border); padding-bottom: 0.5rem; }
+.markdown-content h3 { font-size: 1.25rem; font-weight: 600; color: var(--omega-accent); }
+.markdown-content p { color: var(--omega-muted); line-height: 1.75; margin-bottom: 1rem; }
+.markdown-content ul, .markdown-content ol { color: var(--omega-muted); padding-left: 1.5rem; margin-bottom: 1rem; }
+.markdown-content li { margin-bottom: 0.5rem; line-height: 1.6; }
+.markdown-content strong { color: var(--omega-text); font-weight: 600; }
+.markdown-content a { color: var(--omega-accent); text-decoration: underline; }
+.markdown-content blockquote { border-left: 3px solid var(--omega-accent); padding-left: 1rem; color: var(--omega-muted); font-style: italic; }
+.markdown-content code { background: var(--omega-card); padding: 0.2rem 0.4rem; border-radius: 4px; font-size: 0.8rem; color: var(--omega-accent2); }
+.markdown-content pre { background: var(--omega-card); padding: 1rem; border-radius: 8px; overflow-x: auto; border: 1px solid var(--omega-border); }
+.markdown-content hr { border: none; border-top: 1px solid var(--omega-border); margin: 1.5rem 0; }
